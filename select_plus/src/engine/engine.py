@@ -1,10 +1,11 @@
 from select_plus.src.engine.base_engine import BaseEngine
 from select_plus.src.utils.cost import Cost
+from select_plus.src.models.models import EngineResults, EngineResultsStats
 
 
 class EngineWrapper:
 
-    def execute(self, sql_query: str, extra_func: callable, extra_func_args: dict, engine: BaseEngine):
+    def execute(self, sql_query: str, extra_func: callable, extra_func_args: dict, engine: BaseEngine) -> EngineResults:
 
         response = engine.execute(
             sql_query=sql_query,
@@ -16,7 +17,7 @@ class EngineWrapper:
         return compiled_result
 
     @staticmethod
-    def _compile_results(response: list) -> dict:
+    def _compile_results(response: list) -> EngineResults:
         cost = Cost()
 
         payload = []
@@ -36,15 +37,15 @@ class EngineWrapper:
                                   data_returned=bytes_returned,
                                   files_requested=files_processed)
 
-        compiled_results = {
-            "payload": payload,
-            "stats": {
-                "cost": cost,
-                "files_processed": files_processed,
-                "bytes_scanned": bytes_scanned,
-                "bytes_returned": bytes_returned,
-                "bytes_processed": bytes_processed
-            }
-        }
+        model = EngineResults(
+            payload=payload,
+            stats=EngineResultsStats(
+                cost=cost,
+                files_processed=files_processed,
+                bytes_scanned=bytes_scanned,
+                bytes_returned=bytes_returned,
+                bytes_processed=bytes_processed
+            )
+        )
 
-        return compiled_results
+        return model

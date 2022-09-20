@@ -3,9 +3,17 @@ from multiprocessing import cpu_count
 
 from select_plus.src.aws.s3 import S3
 from select_plus.src.utils.cost import Cost
+from select_plus.src.models.models import EngineResults
 from select_plus.src.engine.base_engine import BaseEngine
 from select_plus.src.engine.sequential_engine import SequentialEngine
 from select_plus.src.engine.parallel_engine import ParallelEngine
+from select_plus.src.engine.engine import EngineWrapper
+
+
+# TODO: CSV format
+# TODO: Parquet format
+# TODO: GZIP compression
+# TODO: BZIP compression
 
 
 class SSP:
@@ -39,14 +47,18 @@ class SSP:
         )
         return estimate_cost
 
-    def select(self, sql_query: str, extra_func=None, extra_func_args=None, threads: int = cpu_count()):
+    def select(self, sql_query: str, extra_func=None, extra_func_args=None,
+               threads: int = cpu_count()) -> EngineResults:
         eng = self.engine(bucket_name=self.bucket_name,
                           prefix=self.prefix,
                           threads=threads,
                           verbose=self.verbose)
 
-        results = eng.execute(sql_query=sql_query,
-                              extra_func=extra_func,
-                              extra_func_args=extra_func_args)
+        eng_wrapper = EngineWrapper()
+
+        results = eng_wrapper.execute(sql_query=sql_query,
+                                      extra_func=extra_func,
+                                      extra_func_args=extra_func_args,
+                                      engine=eng)
 
         return results

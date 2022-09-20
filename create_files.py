@@ -10,6 +10,6 @@ for i in range(100):
 
     if i % 10 == 0:
         prefix = i
-    key = f'{prefix}/file{i}.json'
-
+    key = f'json/{prefix}/file{i}.json'
+    print(key)
     s3.put_object(bucket_name=bucket_name, key=key, body=body)

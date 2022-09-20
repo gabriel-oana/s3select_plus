@@ -12,3 +12,6 @@ __pycharm__
 *.idea*
 S3SelectPlus.egg-info
 s3select_plus.egg-info
+.pytest_cache
+.tox
+.coverage

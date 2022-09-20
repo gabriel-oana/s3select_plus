@@ -71,18 +71,3 @@ class S3:
         }
 
         return content
-
-
-if __name__ == '__main__':
-    from pprint import pprint
-    s3 = S3()
-    # results = s3.list_objects(bucket_name='prd-cipher-finance-raw', prefix='hourly')
-    # pprint(results)
-
-    results = s3.select(
-        bucket_name='prd-cipher-finance-raw',
-        key='hourly/aiai/2022/05/03/aiai.json',
-        sql_string="SELECT * FROM s3object[*] s"
-    )
-
-    print(results)

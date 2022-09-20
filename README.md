@@ -14,6 +14,7 @@
 
 ### 1. Description
 Utility package to query multiple S3 objects using S3 Select.
+More information on AWS S3 Select: https://docs.aws.amazon.com/AmazonS3/latest/userguide/selecting-content-from-objects.html
 
 ### 2 Features
 * Engine modes:

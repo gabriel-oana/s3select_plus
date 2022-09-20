@@ -1,5 +1,17 @@
 # S3 Select Plus
 
+- [S3 Select Plus](#s3-select-plus)
+    + [1. Description](#1-description)
+    + [2 Features](#2-features)
+    + [3. Installation](#3-installation)
+    + [4. Usage](#4-usage)
+      - [4.1 Basic](#41-basic)
+      - [4.2 Running with an "extra function"](#42-running-with-an--extra-function-)
+      - [4.3 Running with SequentialEngine](#43-running-with-sequentialengine)
+      - [4.4 Show statistics](#44-show-statistics)
+    + [5. Development](#5-development)
+      - [5.1 Creating a parallel engine with a different S3 client implementation](#51-creating-a-parallel-engine-with-a-different-s3-client-implementation)
+
 ### 1. Description
 Utility package to query multiple S3 objects using S3 Select.
 

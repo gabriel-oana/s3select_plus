@@ -1,0 +1,14 @@
+.venv
+.DS_Store
+__pycharm__
+*py_charm*
+*__pycharm__*
+*/__pycharm__/*
+*__pycache__*
+.idea
+.idea/*
+.idea/misc.xml
+.idea/S3SelectPlus.iml
+*.idea*
+S3SelectPlus.egg-info
+s3select_plus.egg-info

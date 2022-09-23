@@ -16,7 +16,9 @@ class TestSequentialEngine(TestWrapper):
 
         response = sequential_engine.execute(
             sql_query='',
-            s3_client=self.mock_s3_client
+            s3_client=self.mock_s3_client,
+            input_serialization={},
+            output_serialization={}
         )
         expected_response = [{'payload': 'test', 'stats': {'bytes_scanned': 1, 'bytes_processed': 2, 'bytes_returned': 3}}]
         self.assertListEqual(expected_response, response)
@@ -31,7 +33,9 @@ class TestSequentialEngine(TestWrapper):
 
         response = sequential_engine.execute(
             sql_query='',
-            s3_client=self.mock_s3_client
+            s3_client=self.mock_s3_client,
+            input_serialization={},
+            output_serialization={}
         )
         expected_response = [{'payload': 'test', 'stats': {'bytes_scanned': 1, 'bytes_processed': 2, 'bytes_returned': 3}}]
         self.assertListEqual(expected_response, response)
@@ -52,7 +56,9 @@ class TestSequentialEngine(TestWrapper):
             sql_query='',
             s3_client=self.mock_s3_client,
             extra_func=extra_func,
-            extra_func_args={"extra_field": "test"}
+            extra_func_args={"extra_field": "test"},
+            input_serialization={},
+            output_serialization={}
         )
 
         expected_response = [

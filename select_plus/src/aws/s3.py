@@ -5,7 +5,8 @@ import boto3
 class S3:
 
     def __init__(self, client: boto3.session.Session.client = None):
-        self.client = client if client else boto3.client('s3')
+        self.session = boto3.Session(profile_name='default')  # TODO: Expose this at a higher level
+        self.client = client if client else self.session.client('s3')
 
     def put_object(self, bucket_name: str, key: str, body: Any):
         """
@@ -38,7 +39,14 @@ class S3:
         }
         return response
 
-    def select(self, bucket_name: str, key: str, sql_string: str):
+    def select(self,
+               bucket_name: str,
+               key: str,
+               sql_string: str,
+               input_serialization: dict,
+               output_serialization: dict
+               ) -> dict:
+
         response = self.client.select_object_content(
             Bucket=bucket_name,
             Key=key,
@@ -47,17 +55,8 @@ class S3:
             RequestProgress={
                 'Enabled': True
             },
-            InputSerialization={
-                'CompressionType': 'NONE',
-                'JSON': {
-                    'Type': 'DOCUMENT'
-                }
-            },
-            OutputSerialization={
-                'JSON': {
-                    'RecordDelimiter': '\n'
-                }
-            },
+            InputSerialization=input_serialization,
+            OutputSerialization=output_serialization
         )
 
         payload = list(response['Payload'])
@@ -71,3 +70,4 @@ class S3:
         }
 
         return content
+

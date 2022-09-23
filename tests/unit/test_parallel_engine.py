@@ -54,12 +54,23 @@ class TestParallelEngine(TestWrapper):
             sql_query='SELECT * FROM s3object s',
             extra_func=None,
             extra_func_args={'test': 1},
-            s3_client=self.client
+            s3_client=self.client,
+            input_serialization={},
+            output_serialization={}
         )
 
-        # Cannot pass objects here.
-        small_args_list = [args_list[0][0], args_list[0][1], args_list[0][2], args_list[0][3]]
+        args_list[0]['s3_client'] = None
 
-        expected_args_list = ['test-key/file.json', 'SELECT * FROM s3object s', None, {'test': 1}]
+        expected_args = [
+            {
+                'key': 'test-key/file.json',
+                'sql_query': 'SELECT * FROM s3object s',
+                'extra_func': None,
+                's3_client': None,
+                'extra_func_args': {'test': 1},
+                'input_serialization': {},
+                'output_serialization': {}
+            }
+        ]
 
-        self.assertListEqual(small_args_list, expected_args_list)
+        self.assertListEqual(args_list, expected_args)

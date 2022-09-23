@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name='s3select_plus',
-    version='0.0.2',
+    version='1.0.0',
     author="Gabriel Oana",
     author_email="gabriel.oana91@gmail.com",
     description="S3 select parallel package",

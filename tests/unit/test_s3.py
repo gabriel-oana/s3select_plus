@@ -60,3 +60,45 @@ class TestS3(unittest.TestCase):
         }
         self.assertEqual(objects_in_bucket, expected_response)
 
+    # NO IMPLEMENTATION ON MOTO FOR S3 SELECT YET
+    # A mocked class has been created to make sure the functionality is correct in the S3 class
+    def test_select_json(self):
+
+        class Client:
+
+            @staticmethod
+            def select_object_content(*args, **kwargs):
+
+                payload = [
+                    {
+                        "Records": {
+                            "Payload": str('test').encode()
+                        }
+                    },
+                    {
+                        "Stats": {
+                            "Details": {
+                                "BytesScanned": 1,
+                                "BytesProcessed": 2,
+                                "BytesReturned": 3
+                            }
+                        }
+                    }
+                ]
+
+                mock_response = {"Payload": payload}
+
+                return mock_response
+
+        s3 = S3(client=Client())
+
+        response = s3.select(
+            bucket_name='test-bucket',
+            key='test/test.json',
+            sql_string='SELECT * FROM s3object[*] s'
+        )
+
+        expected_response = {'payload': 'test', 'stats': {'bytes_scanned': 1, 'bytes_processed': 2, 'bytes_returned': 3}}
+
+        self.assertDictEqual(response, expected_response)
+

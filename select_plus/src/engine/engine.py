@@ -1,3 +1,5 @@
+from typing import Optional
+
 from select_plus.src.engine.base_engine import BaseEngine
 from select_plus.src.utils.cost import Cost
 from select_plus.src.models.models import EngineResults, EngineResultsStats
@@ -5,7 +7,8 @@ from select_plus.src.models.models import EngineResults, EngineResultsStats
 
 class EngineWrapper:
 
-    def execute(self, sql_query: str, extra_func: callable, extra_func_args: dict, engine: BaseEngine) -> EngineResults:
+    def execute(self, sql_query: str, extra_func: Optional[callable], extra_func_args: Optional[dict],
+                engine: BaseEngine) -> EngineResults:
 
         response = engine.execute(
             sql_query=sql_query,

@@ -2,11 +2,10 @@
 
 class Cost:
 
-    def __init__(self, sample_files: int = 5):
+    def __init__(self):
         self.request_cost = 0.0004 / 1000
         self.returned_cost = 0.0007 / 1e+9  # dollars per byte
         self.scan_cost = 0.002 / 1e+9  # dollars per byte
-        self.sample_files = sample_files
 
     def compute_block(self, data_scanned: int, data_returned: int, files_requested: int) -> float:
         """

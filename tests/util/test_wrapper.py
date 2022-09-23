@@ -53,7 +53,8 @@ class MockS3Client:
 
 
 class MockEngine(BaseEngine):
-    def execute(self, sql_query: str, extra_func: callable = None, extra_func_args: dict = None, s3_client=None):
+    def execute(self, sql_query: str, input_serialization: dict, output_serialization: dict,
+                extra_func: callable = None, extra_func_args: dict = None, s3_client=None):
         response = [
             {"payload": "test",
              "stats": {

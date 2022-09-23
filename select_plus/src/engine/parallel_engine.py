@@ -10,12 +10,17 @@ class ParallelEngine(BaseEngine):
 
     def execute(self,
                 sql_query: str,
+                input_serialization: dict,
+                output_serialization: dict,
                 extra_func: Optional[callable] = None,
                 extra_func_args: Optional[dict] = None,
-                s3_client: Optional[boto3.session.Session.client] = None) -> list:
+                s3_client: Optional[boto3.session.Session.client] = None,
+                ) -> list:
 
         function_args = self._make_func_args(sql_query=sql_query, extra_func=extra_func,
-                                             extra_func_args=extra_func_args, s3_client=s3_client)
+                                             extra_func_args=extra_func_args, s3_client=s3_client,
+                                             input_serialization=input_serialization,
+                                             output_serialization=output_serialization)
 
         results = self.execute_callable(self._wrapper_func, function_args)
         return results
@@ -36,14 +41,26 @@ class ParallelEngine(BaseEngine):
                     result.append(i)
             return result
 
-    def _make_func_args(self, sql_query: str, extra_func: callable, extra_func_args: dict, s3_client) -> list:
+    def _make_func_args(self, sql_query: str, extra_func: callable, extra_func_args: dict, s3_client,
+                        input_serialization, output_serialization) -> list:
         """
         Gets a list of all keys to be processed
         """
         s3 = S3(client=s3_client)
         s3_keys = s3.list_objects(bucket_name=self.bucket_name, prefix=self.prefix)
         keys = s3_keys['keys']
-        func_args = [(key, sql_query, extra_func, extra_func_args, s3_client) for key in keys]
+        func_args = []
+        for key in keys:
+            func_args.append({
+                "key": key,
+                "sql_query": sql_query,
+                "extra_func": extra_func,
+                "extra_func_args": extra_func_args,
+                "s3_client": s3_client,
+                "input_serialization": input_serialization,
+                "output_serialization": output_serialization
+            })
+
         return func_args
 
     def _wrapper_func(self, args):
@@ -52,5 +69,5 @@ class ParallelEngine(BaseEngine):
         The reason why this exists, is because if the tqdm bar is to exist, then tqdm doesn't work with "pool.starmap".
         As result, one cannot pass multiple parameters to the function.
         """
-        result = self.select_s3(*args)
+        result = self.select_s3(**args)
         return result

@@ -9,6 +9,8 @@ class SequentialEngine(BaseEngine):
 
     def execute(self,
                 sql_query: str,
+                input_serialization: dict,
+                output_serialization: dict,
                 extra_func: Optional[callable] = None,
                 extra_func_args: Optional[dict] = None,
                 s3_client: Optional[boto3.session.Session.client] = None) -> list:
@@ -24,7 +26,10 @@ class SequentialEngine(BaseEngine):
 
         for key in itt:
             response = self.select_s3(key=key, sql_query=sql_query, extra_func=extra_func,
-                                      extra_func_args=extra_func_args, s3_client=s3_client)
+                                      extra_func_args=extra_func_args, s3_client=s3_client,
+                                      input_serialization=input_serialization,
+                                      output_serialization=output_serialization
+                                      )
             result.append(response)
 
         return result

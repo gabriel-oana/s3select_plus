@@ -43,7 +43,9 @@ class TestS3(TestWrapper):
         response = s3.select(
             bucket_name='test-bucket',
             key='test/test.json',
-            sql_string='SELECT * FROM s3object[*] s'
+            sql_string='SELECT * FROM s3object[*] s',
+            input_serialization={},
+            output_serialization={}
         )
 
         expected_response = {'payload': 'test',

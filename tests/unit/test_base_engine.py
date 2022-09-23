@@ -16,4 +16,5 @@ class TestBaseEngine(TestWrapper):
             pass
 
         test_engine = TestEngine(bucket_name='test', prefix='test', threads=1, verbose=False)
-        self.assertRaises(NotImplementedError, test_engine.execute, sql_query='')
+        self.assertRaises(NotImplementedError, test_engine.execute, sql_query='', input_serialization={},
+                          output_serialization={})

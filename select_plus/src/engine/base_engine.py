@@ -1,8 +1,9 @@
 import boto3
-from typing import Optional
+from typing import Optional, Union
 
 from abc import ABC, abstractmethod
 from select_plus.src.aws.s3 import S3
+from select_plus.src.models.models import InputSerialization, OutputSerialization
 
 
 class BaseEngine(ABC):
@@ -16,15 +17,26 @@ class BaseEngine(ABC):
     @abstractmethod
     def execute(self,
                 sql_query: str,
+                input_serialization: Union[InputSerialization, dict],
+                output_serialization: Union[OutputSerialization, dict],
                 extra_func: Optional[callable] = None,
                 extra_func_args: Optional[dict] = None,
-                s3_client: Optional[boto3.session.Session.client] = None):
+                s3_client: Optional[boto3.session.Session.client] = None
+                ):
         raise NotImplementedError
 
-    def select_s3(self, key: str, sql_query: str, extra_func: callable, extra_func_args: dict,
-                  s3_client: Optional[boto3.session.Session.client] = None):
+    def select_s3(self,
+                  key: str,
+                  sql_query: str,
+                  input_serialization: dict,
+                  output_serialization: dict,
+                  extra_func: callable,
+                  extra_func_args: dict,
+                  s3_client: Optional[boto3.session.Session.client] = None
+                  ):
         s3 = S3(client=s3_client)
-        response = s3.select(bucket_name=self.bucket_name, key=key, sql_string=sql_query)
+        response = s3.select(bucket_name=self.bucket_name, key=key, sql_string=sql_query,
+                             input_serialization=input_serialization, output_serialization=output_serialization)
         if extra_func:
             response = self._apply_extra_func(response, extra_func, extra_func_args)
 

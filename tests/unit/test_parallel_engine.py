@@ -42,3 +42,24 @@ class TestParallelEngine(TestWrapper):
         expected_response = [1, 4, 9, 16]
         self.assertListEqual(expected_response, response)
 
+    def test_make_func_args(self):
+        parallel_engine = ParallelEngine(
+            bucket_name='test-bucket',
+            prefix='test-key',
+            threads=1,
+            verbose=False
+        )
+
+        args_list = parallel_engine._make_func_args(
+            sql_query='SELECT * FROM s3object s',
+            extra_func=None,
+            extra_func_args={'test': 1},
+            s3_client=self.client
+        )
+
+        # Cannot pass objects here.
+        small_args_list = [args_list[0][0], args_list[0][1], args_list[0][2], args_list[0][3]]
+
+        expected_args_list = ['test-key/file.json', 'SELECT * FROM s3object s', None, {'test': 1}]
+
+        self.assertListEqual(small_args_list, expected_args_list)

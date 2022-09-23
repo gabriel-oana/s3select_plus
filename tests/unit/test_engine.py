@@ -1,31 +1,8 @@
-import unittest
-
-from select_plus.src.engine.base_engine import BaseEngine
 from select_plus.src.engine.engine import EngineWrapper, EngineResults
+from tests.util.test_wrapper import TestWrapper
 
 
-class TestEngineWrapper(unittest.TestCase):
-
-    def setUp(self) -> None:
-        class MockEngine(BaseEngine):
-            def execute(self, sql_query: str, extra_func: callable = None, extra_func_args: dict = None):
-                response = [
-                    {"payload": "test",
-                     "stats": {
-                        "bytes_scanned": 30,
-                        "bytes_processed": 30,
-                        "bytes_returned": 10
-                        }
-                     }
-                ]
-                return response
-
-        self.mock_engine = MockEngine(
-            bucket_name='test',
-            prefix='test',
-            threads=1,
-            verbose=False
-        )
+class TestEngineWrapper(TestWrapper):
 
     def test_execute_response_type(self):
         engine_wrapper = EngineWrapper()

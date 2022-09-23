@@ -1,7 +1,7 @@
-<img src="https://img.shields.io/github/workflow/status/gabriel-oana/s3select_plus/Tests">
+<span><img src="https://img.shields.io/github/workflow/status/gabriel-oana/s3select_plus/Tests">
 <img src="https://img.shields.io/github/languages/top/gabriel-oana/s3select_plus">
 <img src="https://img.shields.io/pypi/pyversions/s3select-plus">
-<img src="https://img.shields.io/pypi/v/s3select-plus">
+<img src="https://img.shields.io/pypi/v/s3select-plus"></span>
 
 # S3 Select Plus
 

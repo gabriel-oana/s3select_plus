@@ -5,8 +5,7 @@ import boto3
 class S3:
 
     def __init__(self, client: boto3.session.Session.client = None):
-        self.session = boto3.Session(profile_name='default')  # TODO: Expose this at a higher level
-        self.client = client if client else self.session.client('s3')
+        self.client = client if client else boto3.client('s3')
 
     def put_object(self, bucket_name: str, key: str, body: Any):
         """

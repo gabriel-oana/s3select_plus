@@ -4,6 +4,7 @@
 <img src="https://img.shields.io/pypi/v/s3select-plus">
 <img src="https://img.shields.io/badge/linting-pylint-green">
 <img src="https://img.shields.io/github/downloads/gabriel-oana/s3select_plus/total">
+<img src="https://img.shields.io/pypi/dm/s3select_plus?label=pypi%20downloads">
 [![codecov](https://codecov.io/gh/gabriel-oana/s3select_plus/branch/test/badge/graph/badge.svg?token=5BW32QG1KJ)](https://codecov.io/gh/gabriel-oana/s3select_plus)
 </span>
 

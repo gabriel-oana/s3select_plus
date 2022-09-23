@@ -15,3 +15,4 @@ s3select_plus.egg-info
 .pytest_cache
 .tox
 .coverage
+.coverage.Gabriels-MBP*

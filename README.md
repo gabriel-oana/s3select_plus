@@ -19,6 +19,11 @@
       - [4.2 Running with an "extra function"](#42-running-with-an--extra-function-)
       - [4.3 Running with SequentialEngine](#43-running-with-sequentialengine)
       - [4.4 Show statistics](#44-show-statistics)
+      - [4.4 Serialization](#44-serialization)
+        * [4.4.1 JSON Serialization](#441-json-serialization)
+        * [4.4.2 CSV Serialization](#442-csv-serialization)
+        * [4.4.3 Parquet Serialization](#443-parquet-serialization)
+        * [4.4.4 Indirect Serialization](#444-indirect-serialization)
     + [5. Development](#5-development)
       - [5.1 Creating a parallel engine with a different S3 client implementation](#51-creating-a-parallel-engine-with-a-different-s3-client-implementation)
 
@@ -35,8 +40,13 @@ More information on AWS S3 Select: https://docs.aws.amazon.com/AmazonS3/latest/u
 * Possibility to add user defined functions at process level (useful for in-flight transformations)
 * Support for formats: JSON, CSV and Parquet files
 * Support for compressions: GZIP, BZIP
-* Support for Input and Output Serialization
+* Support for Input and Output Serialization using SerializerTypes of dictionary config. 
 * Support for user defined SQL Query
+
+#### 2.1 Future versions:
+* Scan Range functionality exposed
+* SSE functionality exposed
+* Ability to select profile for S3 connections
 
 ### 3. Installation
 
@@ -47,7 +57,7 @@ pip3 install s3select_plus
 ### 4. Usage
 
 #### 4.1 Basic
-By default, this is a parallel process.
+By default, this is a parallel process querying JSON files.
 
 ```python
 from select_plus import SSP
@@ -162,6 +172,142 @@ if __name__ == '__main__':
     print(result.stats.files_processed)
 ```
 
+#### 4.4 Serialization
+The ```select_object_content``` S3 API call will expect some serialization parameters depending on the types of files that are queried.      
+Serialization works by default with all engine types.       
+A full list of all the parameters accessible for the serializers is better described here: 
+https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html#S3.Client.select_object_content
+
+##### 4.4.1 JSON Serialization
+To query JSON files with specific types and parameters one can use the pre-defined Serialization objects
+```python
+from select_plus import SSP
+from select_plus.serializers import CompressionTypes, InputSerialization, OutputSerialization, JSONInputSerialization, JSONOutputSerialization
+
+ssp = SSP(
+    bucket_name='bucket-name',
+    prefix='s3-key-prefix'
+)
+
+if __name__ == '__main__':
+    
+    result = ssp.select(
+        threads=8,
+        sql_query='SELECT * FROM s3object[*] s',
+        input_serialization=InputSerialization(
+            compression_type=CompressionTypes.gzip,
+            json=JSONInputSerialization(
+                Type='DOCUMENT'
+            )
+        ),
+        output_serialization=OutputSerialization(
+            json=JSONOutputSerialization(
+                record_delimiter='\n'
+            )
+        )
+    )
+    
+    print(result.payload)
+
+```
+
+##### 4.4.2 CSV Serialization
+To query CSV files with specific types and parameters one can use the pre-defined Serialization objects
+```python
+from select_plus import SSP
+from select_plus.serializers import CompressionTypes, InputSerialization, OutputSerialization, CSVInputSerialization, CSVOutputSerialization
+
+ssp = SSP(
+    bucket_name='bucket-name',
+    prefix='s3-key-prefix'
+)
+
+if __name__ == '__main__':
+    
+    result = ssp.select(
+        threads=8,
+        sql_query='SELECT * FROM s3object[*] s',
+        input_serialization=InputSerialization(
+            compression_type=CompressionTypes.gzip,
+            csv=CSVInputSerialization(
+                file_header_info='USE'
+            )
+        ),
+        output_serialization=OutputSerialization(
+            csv=CSVOutputSerialization(
+                record_delimiter='\n'
+            )
+        )
+    )
+    
+    print(result.payload)
+
+```
+
+##### 4.4.3 Parquet Serialization
+To query parquet files with specific types and parameters one can use the pre-defined Serialization objects
+```python
+from select_plus import SSP
+from select_plus.serializers import CompressionTypes, InputSerialization, OutputSerialization, CSVOutputSerialization
+
+ssp = SSP(
+    bucket_name='bucket-name',
+    prefix='s3-key-prefix'
+)
+
+if __name__ == '__main__':
+    
+    result = ssp.select(
+        threads=8,
+        sql_query='SELECT * FROM s3object[*] s',
+        input_serialization=InputSerialization(
+            compression_type=CompressionTypes.gzip,
+            parquet={}
+        ),
+        output_serialization=OutputSerialization(
+            csv=CSVOutputSerialization(
+                record_delimiter='\n'
+            )
+        )
+    )
+    
+    print(result.payload)
+
+```
+
+##### 4.4.4 Indirect Serialization
+One can use a simple JSON format to input the serialization types if the Serialization objects should be a part of a configuration file for example.
+```python
+from select_plus import SSP
+
+ssp = SSP(
+    bucket_name='bucket-name',
+    prefix='s3-key-prefix'
+)
+
+if __name__ == '__main__':
+    
+    result = ssp.select(
+        threads=8,
+        sql_query='SELECT * FROM s3object[*] s',
+        input_serialization={
+            "CompressionType": 'GZIP',
+            "JSON": {
+                "Type": "LINES"
+            }
+        },
+        output_serialization={
+            "JSON": {
+                'RecordDelimiter': '\n'
+            }
+        }
+    )
+    
+    print(result.payload)
+
+```
+
+
 ### 5. Development
 #### 5.1 Creating a parallel engine with a different S3 client implementation
 One downside to this package is that the S3 client cannot be treated as an input into the main call.
@@ -169,7 +315,7 @@ The reason is that each individual S3 client must be initialised once per proces
 To circumvent this problem, one can create their own engine where they can implement their own S3 client (or resource).
 
 ```python
-from select_plus import SSP, BaseEngine, ParallelEngine
+from select_plus import SSP, BaseEngine
 from select_plus.src.aws.s3 import S3
 
 

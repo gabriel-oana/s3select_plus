@@ -15,7 +15,7 @@ class ParallelEngine(BaseEngine):
                 s3_client: Optional[boto3.session.Session.client] = None) -> list:
 
         function_args = self._make_func_args(sql_query=sql_query, extra_func=extra_func,
-                                             extra_func_args=extra_func_args)
+                                             extra_func_args=extra_func_args, s3_client=s3_client)
 
         results = self.execute_callable(self._wrapper_func, function_args)
         return results
@@ -28,20 +28,22 @@ class ParallelEngine(BaseEngine):
         with Pool(self.threads) as pool:
             if self.verbose:
                 print(f'Running with {self.threads} processes')
-                # result = pool.starmap(func, tqdm.tqdm(args, total=len(args)))
                 result = list(tqdm.tqdm(pool.imap(func, args), total=len(args)))
             else:
-                result = pool.imap(func, args)
+                result = []
+                partial_result = pool.imap(func, args)
+                for i in partial_result:
+                    result.append(i)
             return result
 
-    def _make_func_args(self, sql_query: str, extra_func: callable, extra_func_args: dict):
+    def _make_func_args(self, sql_query: str, extra_func: callable, extra_func_args: dict, s3_client) -> list:
         """
         Gets a list of all keys to be processed
         """
-        s3 = S3()
+        s3 = S3(client=s3_client)
         s3_keys = s3.list_objects(bucket_name=self.bucket_name, prefix=self.prefix)
         keys = s3_keys['keys']
-        func_args = [(key, sql_query, extra_func, extra_func_args) for key in keys]
+        func_args = [(key, sql_query, extra_func, extra_func_args, s3_client) for key in keys]
         return func_args
 
     def _wrapper_func(self, args):

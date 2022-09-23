@@ -1,0 +1,19 @@
+name: Python package
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.9]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Install tox
+      run: pip install tox
+    - name: Run tox
+      run: tox

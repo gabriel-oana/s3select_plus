@@ -4,7 +4,11 @@ on:
   push:
     tags:
       - 'v*'
-  - workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      git-ref:
+        description: Git Ref (Optional)
+        required: false
 
 jobs:
   tests:

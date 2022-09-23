@@ -1,10 +1,10 @@
-import unittest
 from unittest.mock import patch
 
 from select_plus.src.engine.base_engine import BaseEngine
+from tests.util.test_wrapper import TestWrapper
 
 
-class TestBaseEngine(unittest.TestCase):
+class TestBaseEngine(TestWrapper):
 
     def test_instance_raises(self):
         self.assertRaises(TypeError, BaseEngine, bucket_name='test', prefix='test', threads=1, verbose=False)

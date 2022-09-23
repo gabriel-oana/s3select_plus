@@ -1,20 +1,11 @@
-import unittest
-import boto3
 from moto import mock_s3
+
 from select_plus.src.aws.s3 import S3
+from tests.util.test_wrapper import TestWrapper
 
 
 @mock_s3
-class TestS3(unittest.TestCase):
-
-    def setUp(self) -> None:
-        # Create mock client
-        client = boto3.client("s3", region_name='eu-west-1')
-        self.s3 = S3(client=client)
-
-        # Create mock bucket
-        client.create_bucket(Bucket='test-bucket',
-                             CreateBucketConfiguration={'LocationConstraint': 'eu-west-1'})
+class TestS3(TestWrapper):
 
     def test_put_object(self):
         self.s3.put_object(bucket_name='test-bucket',
@@ -64,33 +55,7 @@ class TestS3(unittest.TestCase):
     # A mocked class has been created to make sure the functionality is correct in the S3 class
     def test_select_json(self):
 
-        class Client:
-
-            @staticmethod
-            def select_object_content(*args, **kwargs):
-
-                payload = [
-                    {
-                        "Records": {
-                            "Payload": str('test').encode()
-                        }
-                    },
-                    {
-                        "Stats": {
-                            "Details": {
-                                "BytesScanned": 1,
-                                "BytesProcessed": 2,
-                                "BytesReturned": 3
-                            }
-                        }
-                    }
-                ]
-
-                mock_response = {"Payload": payload}
-
-                return mock_response
-
-        s3 = S3(client=Client())
+        s3 = S3(client=self.mock_s3_client)
 
         response = s3.select(
             bucket_name='test-bucket',

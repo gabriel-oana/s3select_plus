@@ -1,1 +1,127 @@
-<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="53" time="4.306" timestamp="2022-09-23T23:11:30.105983" hostname="Gabriels-MBP"><testcase classname="tests.unit.test_base_engine.TestBaseEngine" name="test_execute_raises" time="0.176" /><testcase classname="tests.unit.test_base_engine.TestBaseEngine" name="test_instance_raises" time="0.038" /><testcase classname="tests.unit.test_cost.TestCost" name="test_compute_block" time="0.000" /><testcase classname="tests.unit.test_cost.TestCost" name="test_compute_stack" time="0.000" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_execute_response_type" time="0.038" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_bytes_processed_is_correct" time="0.038" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_bytes_returned_is_correct" time="0.038" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_bytes_scanned_is_correct" time="0.071" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_cost_is_correct" time="0.038" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_files_processed_is_correct" time="0.045" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_payload_is_correct" time="0.039" /><testcase classname="tests.unit.test_models.TestModels" name="test_compression_types" time="0.077" /><testcase classname="tests.unit.test_models.TestModels" name="test_csv_input_serialization_invalid" time="0.037" /><testcase classname="tests.unit.test_models.TestModels" name="test_csv_input_serialization_valid" time="0.037" /><testcase classname="tests.unit.test_models.TestModels" name="test_csv_input_serialization_valid_with_missing_params" time="0.037" /><testcase classname="tests.unit.test_models.TestModels" name="test_csv_output_serialization" time="0.038" /><testcase classname="tests.unit.test_models.TestModels" name="test_csv_output_serialization_raises" time="0.073" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_fails_with_more_than_one_serializer" time="0.037" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_compression_str" time="0.037" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_compression_types" time="0.038" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_csv_str" time="0.038" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_csv_types" time="0.076" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_json_str" time="0.037" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_json_types" time="0.037" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_parquet_str" time="0.037" /><testcase classname="tests.unit.test_models.TestModels" name="test_json_input_serialization_invalid" time="0.082" /><testcase classname="tests.unit.test_models.TestModels" name="test_json_input_serialization_valid" time="0.038" /><testcase classname="tests.unit.test_models.TestModels" name="test_json_output_serialization" time="0.038" /><testcase classname="tests.unit.test_models.TestModels" name="test_output_serialization_fails_with_more_than_one_serializer" time="0.037" /><testcase classname="tests.unit.test_models.TestModels" name="test_output_serialization_with_csv_str" time="0.037" /><testcase classname="tests.unit.test_models.TestModels" name="test_output_serialization_with_csv_types" time="0.079" /><testcase classname="tests.unit.test_models.TestModels" name="test_output_serialization_with_json_str" time="0.037" /><testcase classname="tests.unit.test_models.TestModels" name="test_output_serialization_with_json_types" time="0.037" /><testcase classname="tests.unit.test_parallel_engine.TestParallelEngine" name="test_execute_callable" time="0.246" /><testcase classname="tests.unit.test_parallel_engine.TestParallelEngine" name="test_execute_callable_verbose" time="0.232" /><testcase classname="tests.unit.test_parallel_engine.TestParallelEngine" name="test_make_func_args" time="0.107" /><testcase classname="tests.unit.test_s3.TestS3" name="test_list_objects" time="0.055" /><testcase classname="tests.unit.test_s3.TestS3" name="test_list_objects_response" time="0.054" /><testcase classname="tests.unit.test_s3.TestS3" name="test_list_objects_with_many_objects" time="0.952" /><testcase classname="tests.unit.test_s3.TestS3" name="test_put_object" time="0.056" /><testcase classname="tests.unit.test_s3.TestS3" name="test_select_json" time="0.077" /><testcase classname="tests.unit.test_sequential_engine.TestSequentialEngine" name="test_execute_with_extra_function" time="0.055" /><testcase classname="tests.unit.test_sequential_engine.TestSequentialEngine" name="test_execute_with_verbose_flag" time="0.056" /><testcase classname="tests.unit.test_sequential_engine.TestSequentialEngine" name="test_execute_without_verbose_flag" time="0.055" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_estimate_cost" time="0.135" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_raises_on_wrong_engine" time="0.050" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_bytes_processed" time="0.048" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_bytes_returned" time="0.080" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_bytes_scanned" time="0.047" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_cost" time="0.049" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_files_processed" time="0.047" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_results" time="0.048" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_type" time="0.090" /></testsuite></testsuites>
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite errors="0" failures="4" hostname="Gab-PC" name="pytest" skipped="0" tests="53" time="11.087" timestamp="2022-09-25T19:46:38.426392"><testcase classname="tests.unit.test_base_engine.TestBaseEngine" name="test_execute_raises" time="0.318" /><testcase classname="tests.unit.test_base_engine.TestBaseEngine" name="test_instance_raises" time="0.119" /><testcase classname="tests.unit.test_cost.TestCost" name="test_compute_block" time="0.001" /><testcase classname="tests.unit.test_cost.TestCost" name="test_compute_stack" time="0.001" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_execute_response_type" time="0.119" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_bytes_processed_is_correct" time="0.117" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_bytes_returned_is_correct" time="0.115" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_bytes_scanned_is_correct" time="0.154" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_cost_is_correct" time="0.113" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_files_processed_is_correct" time="0.115" /><testcase classname="tests.unit.test_engine.TestEngineWrapper" name="test_response_payload_is_correct" time="0.118" /><testcase classname="tests.unit.test_models.TestModels" name="test_compression_types" time="0.123" /><testcase classname="tests.unit.test_models.TestModels" name="test_csv_input_serialization_invalid" time="0.190" /><testcase classname="tests.unit.test_models.TestModels" name="test_csv_input_serialization_valid" time="0.172" /><testcase classname="tests.unit.test_models.TestModels" name="test_csv_input_serialization_valid_with_missing_params" time="0.154" /><testcase classname="tests.unit.test_models.TestModels" name="test_csv_output_serialization" time="0.128" /><testcase classname="tests.unit.test_models.TestModels" name="test_csv_output_serialization_raises" time="0.182" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_fails_with_more_than_one_serializer" time="0.121" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_compression_str" time="0.112" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_compression_types" time="0.176" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_csv_str" time="0.155" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_csv_types" time="0.171" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_json_str" time="0.111" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_json_types" time="0.127" /><testcase classname="tests.unit.test_models.TestModels" name="test_input_serialization_with_parquet_str" time="0.121" /><testcase classname="tests.unit.test_models.TestModels" name="test_json_input_serialization_invalid" time="0.116" /><testcase classname="tests.unit.test_models.TestModels" name="test_json_input_serialization_valid" time="0.168" /><testcase classname="tests.unit.test_models.TestModels" name="test_json_output_serialization" time="0.112" /><testcase classname="tests.unit.test_models.TestModels" name="test_output_serialization_fails_with_more_than_one_serializer" time="0.113" /><testcase classname="tests.unit.test_models.TestModels" name="test_output_serialization_with_csv_str" time="0.119" /><testcase classname="tests.unit.test_models.TestModels" name="test_output_serialization_with_csv_types" time="0.118" /><testcase classname="tests.unit.test_models.TestModels" name="test_output_serialization_with_json_str" time="0.179" /><testcase classname="tests.unit.test_models.TestModels" name="test_output_serialization_with_json_types" time="0.123" /><testcase classname="tests.unit.test_parallel_engine.TestParallelEngine" name="test_execute_callable" time="0.277" /><testcase classname="tests.unit.test_parallel_engine.TestParallelEngine" name="test_execute_callable_verbose" time="0.272" /><testcase classname="tests.unit.test_parallel_engine.TestParallelEngine" name="test_make_func_args" time="0.225" /><testcase classname="tests.unit.test_s3.TestS3" name="test_list_objects" time="0.293" /><testcase classname="tests.unit.test_s3.TestS3" name="test_list_objects_response" time="0.202" /><testcase classname="tests.unit.test_s3.TestS3" name="test_list_objects_with_many_objects" time="2.320" /><testcase classname="tests.unit.test_s3.TestS3" name="test_put_object" time="0.245" /><testcase classname="tests.unit.test_s3.TestS3" name="test_select_json" time="0.140"><failure message="AssertionError: {'payload': ['test'], 'stats': {'bytes_scanned': 1, '[37 chars]: 3}} != {'payload': 'test', 'stats': {'bytes_scanned': 1, 'by[35 chars]: 3}}&#10;- {'payload': ['test'],&#10;?             -      -&#10;&#10;+ {'payload': 'test',&#10;   'stats': {'bytes_processed': 2, 'bytes_returned': 3, 'bytes_scanned': 1}}">self = &lt;tests.unit.test_s3.TestS3 testMethod=test_select_json&gt;
+
+    def test_select_json(self):
+        s3 = S3(client=self.mock_s3_client)
+    
+        response = s3.select(
+            bucket_name='test-bucket',
+            key='test/test.json',
+            sql_string='SELECT * FROM s3object[*] s',
+            input_serialization={},
+            output_serialization={}
+        )
+    
+        expected_response = {'payload': 'test',
+                             'stats': {'bytes_scanned': 1, 'bytes_processed': 2, 'bytes_returned': 3}}
+    
+&gt;       self.assertDictEqual(response, expected_response)
+E       AssertionError: {'payload': ['test'], 'stats': {'bytes_scanned': 1, '[37 chars]: 3}} != {'payload': 'test', 'stats': {'bytes_scanned': 1, 'by[35 chars]: 3}}
+E       - {'payload': ['test'],
+E       ?             -      -
+E       
+E       + {'payload': 'test',
+E          'stats': {'bytes_processed': 2, 'bytes_returned': 3, 'bytes_scanned': 1}}
+
+tests/unit/test_s3.py:54: AssertionError</failure></testcase><testcase classname="tests.unit.test_sequential_engine.TestSequentialEngine" name="test_execute_with_extra_function" time="0.137"><failure message="AssertionError: Lists differ: [{'st[36 chars]ocessed': 2, 'bytes_returned': 3}, 'payload': 'test-test'}] != [{'st[36 chars]ocessed': 2, 'bytes_returned': 3}, 'payload': &quot;['test']-test&quot;}]&#10;&#10;First differing element 0:&#10;{'sta[34 chars]rocessed': 2, 'bytes_returned': 3}, 'payload': 'test-test'}&#10;{'sta[34 chars]rocessed': 2, 'bytes_returned': 3}, 'payload': &quot;['test']-test&quot;}&#10;&#10;- [{'payload': 'test-test',&#10;?                        ^&#10;&#10;+ [{'payload': &quot;['test']-test&quot;,&#10;?              ++     ++     ^&#10;&#10;    'stats': {'bytes_processed': 2, 'bytes_returned': 3, 'bytes_scanned': 1}}]">self = &lt;tests.unit.test_sequential_engine.TestSequentialEngine testMethod=test_execute_with_extra_function&gt;
+
+    def test_execute_with_extra_function(self):
+        sequential_engine = SequentialEngine(
+            bucket_name='test',
+            prefix='test',
+            threads=1,
+            verbose=False
+        )
+    
+        def extra_func(response, extra_field: str):
+            response = f'{response}-{extra_field}'
+            return response
+    
+        result = sequential_engine.execute(
+            sql_query='',
+            s3_client=self.mock_s3_client,
+            extra_func=extra_func,
+            extra_func_args={"extra_field": "test"},
+            input_serialization={},
+            output_serialization={}
+        )
+    
+        expected_response = [
+            {'stats': {'bytes_scanned': 1, 'bytes_processed': 2, 'bytes_returned': 3}, 'payload': 'test-test'}
+        ]
+    
+&gt;       self.assertListEqual(expected_response, result)
+E       AssertionError: Lists differ: [{'st[36 chars]ocessed': 2, 'bytes_returned': 3}, 'payload': 'test-test'}] != [{'st[36 chars]ocessed': 2, 'bytes_returned': 3}, 'payload': "['test']-test"}]
+E       
+E       First differing element 0:
+E       {'sta[34 chars]rocessed': 2, 'bytes_returned': 3}, 'payload': 'test-test'}
+E       {'sta[34 chars]rocessed': 2, 'bytes_returned': 3}, 'payload': "['test']-test"}
+E       
+E       - [{'payload': 'test-test',
+E       ?                        ^
+E       
+E       + [{'payload': "['test']-test",
+E       ?              ++     ++     ^
+E       
+E           'stats': {'bytes_processed': 2, 'bytes_returned': 3, 'bytes_scanned': 1}}]
+
+tests/unit/test_sequential_engine.py:68: AssertionError</failure></testcase><testcase classname="tests.unit.test_sequential_engine.TestSequentialEngine" name="test_execute_with_verbose_flag" time="0.203"><failure message="AssertionError: Lists differ: [{'payload': 'test', 'stats': {'bytes_scanned': 1, 'by[36 chars] 3}}] != [{'payload': ['test'], 'stats': {'bytes_scanned': 1, '[38 chars] 3}}]&#10;&#10;First differing element 0:&#10;{'payload': 'test', 'stats': {'bytes_scanned': 1, 'by[35 chars]: 3}}&#10;{'payload': ['test'], 'stats': {'bytes_scanned': 1, '[37 chars]: 3}}&#10;&#10;- [{'payload': 'test',&#10;+ [{'payload': ['test'],&#10;?              +      +&#10;&#10;    'stats': {'bytes_processed': 2, 'bytes_returned': 3, 'bytes_scanned': 1}}]">self = &lt;tests.unit.test_sequential_engine.TestSequentialEngine testMethod=test_execute_with_verbose_flag&gt;
+
+    def test_execute_with_verbose_flag(self):
+        sequential_engine = SequentialEngine(
+            bucket_name='test',
+            prefix='test',
+            threads=1,
+            verbose=True
+        )
+    
+        response = sequential_engine.execute(
+            sql_query='',
+            s3_client=self.mock_s3_client,
+            input_serialization={},
+            output_serialization={}
+        )
+        expected_response = [{'payload': 'test', 'stats': {'bytes_scanned': 1, 'bytes_processed': 2, 'bytes_returned': 3}}]
+&gt;       self.assertListEqual(expected_response, response)
+E       AssertionError: Lists differ: [{'payload': 'test', 'stats': {'bytes_scanned': 1, 'by[36 chars] 3}}] != [{'payload': ['test'], 'stats': {'bytes_scanned': 1, '[38 chars] 3}}]
+E       
+E       First differing element 0:
+E       {'payload': 'test', 'stats': {'bytes_scanned': 1, 'by[35 chars]: 3}}
+E       {'payload': ['test'], 'stats': {'bytes_scanned': 1, '[37 chars]: 3}}
+E       
+E       - [{'payload': 'test',
+E       + [{'payload': ['test'],
+E       ?              +      +
+E       
+E           'stats': {'bytes_processed': 2, 'bytes_returned': 3, 'bytes_scanned': 1}}]
+
+tests/unit/test_sequential_engine.py:24: AssertionError</failure></testcase><testcase classname="tests.unit.test_sequential_engine.TestSequentialEngine" name="test_execute_without_verbose_flag" time="0.138"><failure message="AssertionError: Lists differ: [{'payload': 'test', 'stats': {'bytes_scanned': 1, 'by[36 chars] 3}}] != [{'payload': ['test'], 'stats': {'bytes_scanned': 1, '[38 chars] 3}}]&#10;&#10;First differing element 0:&#10;{'payload': 'test', 'stats': {'bytes_scanned': 1, 'by[35 chars]: 3}}&#10;{'payload': ['test'], 'stats': {'bytes_scanned': 1, '[37 chars]: 3}}&#10;&#10;- [{'payload': 'test',&#10;+ [{'payload': ['test'],&#10;?              +      +&#10;&#10;    'stats': {'bytes_processed': 2, 'bytes_returned': 3, 'bytes_scanned': 1}}]">self = &lt;tests.unit.test_sequential_engine.TestSequentialEngine testMethod=test_execute_without_verbose_flag&gt;
+
+    def test_execute_without_verbose_flag(self):
+        sequential_engine = SequentialEngine(
+            bucket_name='test',
+            prefix='test',
+            threads=1,
+            verbose=False
+        )
+    
+        response = sequential_engine.execute(
+            sql_query='',
+            s3_client=self.mock_s3_client,
+            input_serialization={},
+            output_serialization={}
+        )
+        expected_response = [{'payload': 'test', 'stats': {'bytes_scanned': 1, 'bytes_processed': 2, 'bytes_returned': 3}}]
+&gt;       self.assertListEqual(expected_response, response)
+E       AssertionError: Lists differ: [{'payload': 'test', 'stats': {'bytes_scanned': 1, 'by[36 chars] 3}}] != [{'payload': ['test'], 'stats': {'bytes_scanned': 1, '[38 chars] 3}}]
+E       
+E       First differing element 0:
+E       {'payload': 'test', 'stats': {'bytes_scanned': 1, 'by[35 chars]: 3}}
+E       {'payload': ['test'], 'stats': {'bytes_scanned': 1, '[37 chars]: 3}}
+E       
+E       - [{'payload': 'test',
+E       + [{'payload': ['test'],
+E       ?              +      +
+E       
+E           'stats': {'bytes_processed': 2, 'bytes_returned': 3, 'bytes_scanned': 1}}]
+
+tests/unit/test_sequential_engine.py:41: AssertionError</failure></testcase><testcase classname="tests.unit.test_ssp.TestSSP" name="test_estimate_cost" time="0.337" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_raises_on_wrong_engine" time="0.186" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_bytes_processed" time="0.201" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_bytes_returned" time="0.149" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_bytes_scanned" time="0.137" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_cost" time="0.141" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_files_processed" time="0.148" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_results" time="0.190" /><testcase classname="tests.unit.test_ssp.TestSSP" name="test_select_type" time="0.152" /></testsuite></testsuites>

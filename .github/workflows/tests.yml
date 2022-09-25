@@ -6,6 +6,8 @@ on:
       - 'v*'
     branches:
       - 'test/**'
+  pull_request:
+    types: [opened, reopened]
 
 jobs:
   tests:

@@ -1,11 +1,15 @@
 from typing import Any
 import boto3
+from botocore.config import Config
 
 
 class S3:
 
     def __init__(self, client: boto3.session.Session.client = None):
-        self.client = client if client else boto3.client('s3')
+        self.config = Config(
+            retries=dict(max_attempts=10)
+        )
+        self.client = client if client else boto3.client('s3', config=self.config)
 
     def put_object(self, bucket_name: str, key: str, body: Any):
         """
@@ -26,6 +30,9 @@ class S3:
 
         for page in paginator.paginate(Bucket=bucket_name, Prefix=prefix):
             total_files += page['KeyCount']
+
+            if total_files == 0:
+                raise RuntimeError(f'No files found in prefix {prefix}')
 
             for content in page['Contents']:
                 keys.append(content['Key'])
@@ -59,12 +66,26 @@ class S3:
         )
 
         payload = list(response['Payload'])
+
+        full_content = []
+        bytes_scanned = None
+        bytes_processed = None
+        bytes_returned = None
+
+        for item in payload:
+            if "Records" in item.keys():
+                full_content.append(item['Records']['Payload'].decode())
+            if "Stats" in item.keys():
+                bytes_scanned = item['Stats']['Details']['BytesScanned']
+                bytes_processed = item['Stats']['Details']['BytesProcessed']
+                bytes_returned = item['Stats']['Details']['BytesReturned']
+
         content = {
-            "payload": payload[0]['Records']['Payload'].decode(),
+            "payload": ''.join(full_content),
             "stats": {
-                "bytes_scanned": payload[1]['Stats']['Details']['BytesScanned'],
-                "bytes_processed": payload[1]['Stats']['Details']['BytesProcessed'],
-                "bytes_returned": payload[1]['Stats']['Details']['BytesReturned'],
+                "bytes_scanned": bytes_scanned,
+                "bytes_processed": bytes_processed,
+                "bytes_returned": bytes_returned,
             }
         }
 

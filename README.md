@@ -49,6 +49,29 @@ More information on AWS S3 Select: https://docs.aws.amazon.com/AmazonS3/latest/u
 * SSE functionality exposed
 * Ability to select profile for S3 connections
 
+#### 2.2 Performance
+The parallelisation of the file query allows one to get to time to query multiple files much faster. 
+The performance test below has been performed.
+
+For many small files of different types the following results have been achieved on an 8 core CPU (network transfer speeds ignored):
+```text
+|   case | engine     | file_type   |   files | total_size   |   columns |   responses |   time_taken_sec |        cost |
+|--------+------------+-------------+---------+--------------+-----------+-------------+------------------+-------------|
+|      1 | sequential | json        |     200 | 100 MB       |         1 |         200 |            42.53 | 0.000232982 |
+|      2 | parallel   | json        |     200 | 100 MB       |         1 |         200 |             5.79 | 0.000232982 |
+|      3 | sequential | json        |     200 | 100 MB       |         5 |         200 |            44.71 | 0.000256532 |
+|      4 | parallel   | json        |     200 | 100 MB       |         5 |         200 |             6.81 | 0.000256532 |
+|      5 | sequential | csv         |     100 | 100 MB       |         1 |         100 |            26.54 | 0.000247681 |
+|      6 | parallel   | csv         |     100 | 100 MB       |         1 |         100 |             7.14 | 0.000247681 |
+|      7 | sequential | csv         |     100 | 100 MB       |         5 |         100 |            38.26 | 0.000373264 |
+|      8 | parallel   | csv         |     100 | 100 MB       |         5 |         100 |            16.2  | 0.000373264 |
+|      9 | sequential | parquet     |     100 | 100 MB       |         1 |         100 |            43.79 | 7.39638e-05 |
+|     10 | parallel   | parquet     |     100 | 100 MB       |         1 |         100 |            21.05 | 7.39638e-05 |
+|     11 | sequential | parquet     |     100 | 100 MB       |         5 |         100 |            64.34 | 0.00034574  |
+|     12 | parallel   | parquet     |     100 | 100 MB       |         5 |         100 |            28.34 | 0.00034574  |
+```
+
+
 ### 3. Installation
 
 ```shell

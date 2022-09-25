@@ -59,12 +59,26 @@ class S3:
         )
 
         payload = list(response['Payload'])
+
+        full_content = []
+        bytes_scanned = None
+        bytes_processed = None
+        bytes_returned = None
+
+        for item in payload:
+            if "Records" in item.keys():
+                full_content.append(item['Records']['Payload'].decode())
+            if "Stats" in item.keys():
+                bytes_scanned = item['Stats']['Details']['BytesScanned']
+                bytes_processed = item['Stats']['Details']['BytesProcessed']
+                bytes_returned = item['Stats']['Details']['BytesReturned']
+
         content = {
-            "payload": payload[0]['Records']['Payload'].decode(),
+            "payload": full_content,
             "stats": {
-                "bytes_scanned": payload[1]['Stats']['Details']['BytesScanned'],
-                "bytes_processed": payload[1]['Stats']['Details']['BytesProcessed'],
-                "bytes_returned": payload[1]['Stats']['Details']['BytesReturned'],
+                "bytes_scanned": bytes_scanned,
+                "bytes_processed": bytes_processed,
+                "bytes_returned": bytes_returned,
             }
         }
 

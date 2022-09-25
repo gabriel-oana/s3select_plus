@@ -69,6 +69,8 @@ For many small files of different types the following results have been achieved
 |     10 | parallel   | parquet     |     100 | 100 MB       |         1 |         100 |            21.05 | 7.39638e-05 |
 |     11 | sequential | parquet     |     100 | 100 MB       |         5 |         100 |            64.34 | 0.00034574  |
 |     12 | parallel   | parquet     |     100 | 100 MB       |         5 |         100 |            28.34 | 0.00034574  |
+|     13 | sequential | json        |    2000 | 1 GB         |         1 |        2000 |           552.23 | 0.00232982  |
+|     14 | parallel   | json        |    2000 | 1 GB         |         1 |        2000 |           330.23 | 0.00232982  |
 ```
 
 

@@ -1,11 +1,15 @@
 from typing import Any
 import boto3
+from botocore.config import Config
 
 
 class S3:
 
     def __init__(self, client: boto3.session.Session.client = None):
-        self.client = client if client else boto3.client('s3')
+        self.config = Config(
+            retries=dict(max_attempts=10)
+        )
+        self.client = client if client else boto3.client('s3', config=self.config)
 
     def put_object(self, bucket_name: str, key: str, body: Any):
         """
@@ -26,6 +30,9 @@ class S3:
 
         for page in paginator.paginate(Bucket=bucket_name, Prefix=prefix):
             total_files += page['KeyCount']
+
+            if total_files == 0:
+                raise RuntimeError(f'No files found in prefix {prefix}')
 
             for content in page['Contents']:
                 keys.append(content['Key'])
@@ -74,7 +81,7 @@ class S3:
                 bytes_returned = item['Stats']['Details']['BytesReturned']
 
         content = {
-            "payload": full_content,
+            "payload": ''.join(full_content),
             "stats": {
                 "bytes_scanned": bytes_scanned,
                 "bytes_processed": bytes_processed,

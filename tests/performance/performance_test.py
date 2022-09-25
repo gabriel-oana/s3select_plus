@@ -18,6 +18,8 @@
 # 14        |       Parallel    |       parquet         |       100         |       100 MB          |       csv         |       1
 # 15        |       Sequential  |       parquet         |       100         |       100 MB          |       csv         |       5
 # 16        |       Parallel    |       parquet         |       100         |       100 MB          |       csv         |       5
+# 17        |       Sequential  |       json            |       2000        |       1 GB            |       json        |       1
+# 18        |       Parallel    |       json            |       2000        |       1 GB            |       json        |       1
 
 import time
 from tabulate import tabulate
@@ -32,30 +34,33 @@ class PerformanceTest:
         self.bucket_name = bucket_name
         self.csv_prefix = 'csv'
         self.json_prefix = 'json'
+        self.large_json_prefix = 'large_json'
         self.parquet_prefix = 'parquet'
         self.threads = threads
         self.results = []
 
     def __call__(self):
-        self.case1()
-        self.case2()
-        self.case3()
-        self.case4()
-        self.case5()
-        self.case6()
-        self.case7()
-        self.case8()
-        self.case9()
-        self.case10()
-        self.case11()
-        self.case12()
+        # self.case1()
+        # self.case2()
+        # self.case3()
+        # self.case4()
+        # self.case5()
+        # self.case6()
+        # self.case7()
+        # self.case8()
+        # self.case9()
+        # self.case10()
+        # self.case11()
+        # self.case12()
+        self.case13()
+        self.case14()
 
         self._tabulate_results()
 
     def _tabulate_results(self):
         results = tabulate(
             tabular_data=self.results,
-            headers=['case', 'engine', 'file_format', 'files', 'total_size', 'columns_selected', 'responses',  'time_taken_sec', 'cost'],
+            headers=['case', 'engine', 'file_type', 'files', 'total_size', 'columns', 'responses',  'time_taken_sec', 'cost'],
             tablefmt="orgtbl"
         )
         with open('results.txt', 'w') as f:
@@ -396,6 +401,66 @@ class PerformanceTest:
         time_spent = round(end - start, 2)
 
         self.results.append([12, 'parallel', 'parquet', 100, '100 MB', 5, responses, time_spent, response.stats.cost])
+
+    def case13(self):
+        print('Performance Test - Case 13')
+        start = time.time()
+        ssp = SSP(
+            bucket_name=self.bucket_name,
+            engine=SequentialEngine,
+            prefix=self.large_json_prefix,
+            verbose=True
+        )
+
+        response = ssp.select(
+            threads=self.threads,
+            sql_query='SELECT s.id FROM s3object[*][*] s',
+            input_serialization=InputSerialization(
+                json=JSONInputSerialization(
+                    Type='DOCUMENT'
+                )
+            ),
+            output_serialization=OutputSerialization(
+                json=JSONOutputSerialization()
+            )
+        )
+
+        responses = len(response.payload)
+        end = time.time()
+        time_spent = round(end - start, 2)
+
+        self.results.append(
+            [13, 'sequential', 'json', 2000, '1000 MB', 1, responses, time_spent, response.stats.cost]
+        )
+
+    def case14(self):
+        print('Performance Test - Case 14')
+        start = time.time()
+        ssp = SSP(
+            bucket_name=self.bucket_name,
+            engine=ParallelEngine,
+            prefix=self.large_json_prefix,
+            verbose=True
+        )
+
+        response = ssp.select(
+            threads=self.threads,
+            sql_query='SELECT s.id FROM s3object[*][*] s',
+            input_serialization=InputSerialization(
+                json=JSONInputSerialization(
+                    Type='DOCUMENT'
+                )
+            ),
+            output_serialization=OutputSerialization(
+                json=JSONOutputSerialization()
+            )
+        )
+
+        responses = len(response.payload)
+        end = time.time()
+        time_spent = round(end - start, 2)
+
+        self.results.append([14, 'parallel', 'json', 2000, '1000 MB', 1, responses, time_spent, response.stats.cost])
 
 
 if __name__ == '__main__':

@@ -25,7 +25,7 @@ class ParallelEngine(BaseEngine):
         results = self.execute_callable(self._wrapper_func, function_args)
         return results
 
-    def execute_callable(self, func: callable, args: list) -> list:
+    def execute_callable(self, func: callable, args: list = None) -> list:
         """
         Generic parallel executor for a function with a list of arguments.
         The args must be of format [(arg1, arg2, arg3...), (arg1, arg2, arg3...)]

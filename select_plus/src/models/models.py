@@ -16,6 +16,33 @@ class EngineResults:
     payload: list
     stats: EngineResultsStats
 
+    @property
+    def payload_dict(self) -> list:
+        payload_dict = []
+        dict_repr = []
+        for i in self.payload:
+            s = i.replace('\n', ',')
+            f = list(eval(s))
+            dict_repr.append(f)
+
+        for block in dict_repr:
+            payload_dict += block
+
+        return payload_dict
+
+    @property
+    def payload_csv(self):
+        # CSV Parser
+        payload_csv = []
+        for i in self.payload:
+            s = i.split('\n')
+
+            for row in s:
+                if len(row) > 0:
+                    payload_csv.append(row.split(','))
+
+        return payload_csv
+
 
 @dataclass
 class CompressionTypes:

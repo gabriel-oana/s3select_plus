@@ -66,3 +66,28 @@ class TestSequentialEngine(TestWrapper):
         ]
 
         self.assertListEqual(expected_response, result)
+
+    def test_execute_with_extra_function_no_args(self):
+        sequential_engine = SequentialEngine(
+            bucket_name='test',
+            prefix='test',
+            threads=1,
+            verbose=False
+        )
+
+        def extra_func(response):
+            return response
+
+        result = sequential_engine.execute(
+            sql_query='',
+            s3_client=self.mock_s3_client,
+            extra_func=extra_func,
+            input_serialization={},
+            output_serialization={}
+        )
+
+        expected_response = [
+            {'stats': {'bytes_scanned': 1, 'bytes_processed': 2, 'bytes_returned': 3}, 'payload': 'test'}
+        ]
+
+        self.assertListEqual(expected_response, result)

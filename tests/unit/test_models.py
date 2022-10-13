@@ -1,5 +1,5 @@
 from select_plus.src.models.models import CompressionTypes, CSVOutputSerialization, CSVInputSerialization, \
-    JSONOutputSerialization, JSONInputSerialization, InputSerialization, OutputSerialization
+    JSONOutputSerialization, JSONInputSerialization, InputSerialization, OutputSerialization, EngineResults, EngineResultsStats
 from tests.util.test_wrapper import TestWrapper
 
 
@@ -201,3 +201,53 @@ class TestModels(TestWrapper):
     def test_output_serialization_fails_with_more_than_one_serializer(self):
         self.assertRaises(RuntimeError, OutputSerialization, json={}, csv={})
 
+    def test_engine_results_payload_csv(self):
+        er = EngineResults(
+            payload=['1,2,3,4,5,6,7,8,9,10\n1,2,3,4,5,6,7,8,9,10\n1,2,3,4,5,6,7,8,9,10\n1,2,3,4,5,6,7,8,9,10\n1,2,3,4,5,6,7,8,9,10\n'],
+            stats=EngineResultsStats(
+                cost=0,
+                files_processed=0,
+                bytes_scanned=0,
+                bytes_returned=0,
+                bytes_processed=0
+            )
+        )
+
+        expected_result = [
+            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+        ]
+        self.assertListEqual(expected_result, er.payload_csv)
+
+    def test_engine_results_payload_dict(self):
+        er = EngineResults(
+            payload=['{"ticker":"VUSA.L"}\n{"ticker":"VUSA.L"}\n'],
+            stats=EngineResultsStats(
+                cost=0,
+                files_processed=0,
+                bytes_scanned=0,
+                bytes_returned=0,
+                bytes_processed=0
+            )
+        )
+
+        expected_result = [{"ticker": "VUSA.L"}, {"ticker": "VUSA.L"}]
+        self.assertListEqual(expected_result, er.payload_dict)
+
+    def test_engine_results_payload_multiple_dict(self):
+        er = EngineResults(
+            payload=['[{"ticker":"VUSA.L"}\n],[{"ticker":"VUSA.L"}\n]'],
+            stats=EngineResultsStats(
+                cost=0,
+                files_processed=0,
+                bytes_scanned=0,
+                bytes_returned=0,
+                bytes_processed=0
+            )
+        )
+
+        expected_result = [[{'ticker': 'VUSA.L'}], [{'ticker': 'VUSA.L'}]]
+        self.assertListEqual(expected_result, er.payload_dict)

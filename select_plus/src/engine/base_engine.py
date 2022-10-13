@@ -31,7 +31,7 @@ class BaseEngine(ABC):
                   input_serialization: dict,
                   output_serialization: dict,
                   extra_func: callable,
-                  extra_func_args: dict,
+                  extra_func_args: Optional[dict],
                   s3_client: Optional[boto3.session.Session.client] = None
                   ):
         s3 = S3(client=s3_client)
@@ -56,6 +56,9 @@ class BaseEngine(ABC):
             "payload": None
         }
 
-        func_response = extra_func(response['payload'], **extra_func_args)
+        if extra_func_args:
+            func_response = extra_func(response['payload'], **extra_func_args)
+        else:
+            func_response = extra_func(response['payload'])
         block_response['payload'] = func_response
         return block_response

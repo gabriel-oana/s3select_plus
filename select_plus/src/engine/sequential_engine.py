@@ -1,6 +1,6 @@
+from typing import Optional
 import tqdm
 import boto3
-from typing import Optional
 from select_plus.src.aws.s3 import S3
 from select_plus.src.engine.base_engine import BaseEngine
 
@@ -33,5 +33,3 @@ class SequentialEngine(BaseEngine):
             result.append(response)
 
         return result
-
-

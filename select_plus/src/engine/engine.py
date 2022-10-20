@@ -54,11 +54,11 @@ class EngineWrapper:
         bytes_returned = 0
         files_processed = 0
 
-        for r in response:
-            payload.append(r['payload'])
-            bytes_scanned += r['stats']['bytes_scanned']
-            bytes_processed += r['stats']['bytes_processed']
-            bytes_returned += r['stats']['bytes_returned']
+        for record in response:
+            payload.append(record['payload'])
+            bytes_scanned += record['stats']['bytes_scanned']
+            bytes_processed += record['stats']['bytes_processed']
+            bytes_returned += record['stats']['bytes_returned']
             files_processed += 1
 
         cost = cost.compute_block(data_scanned=bytes_scanned,

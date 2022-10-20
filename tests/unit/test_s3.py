@@ -29,6 +29,9 @@ class TestS3(TestWrapper):
 
         self.assertEqual(len(objects_in_bucket['keys']), 2001)
 
+    def test_list_objects_raises_without_files_present(self):
+        self.assertRaises(RuntimeError, self.s3.list_objects, bucket_name='test-bucket', prefix='some-wrong-prefix')
+
     def test_list_objects_response(self):
         objects_in_bucket = self.s3.list_objects(bucket_name='test-bucket',
                                                  prefix='test')

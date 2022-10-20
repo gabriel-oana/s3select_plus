@@ -74,3 +74,21 @@ class TestParallelEngine(TestWrapper):
         ]
 
         self.assertListEqual(args_list, expected_args)
+
+    # Test cannot be executed because boto3 client cannot be pickled
+    # def test_execute(self):
+    #     parallel_engine = ParallelEngine(
+    #         bucket_name='test-bucket',
+    #         prefix='test-key',
+    #         threads=1,
+    #         verbose=False
+    #     )
+    #
+    #     args_list = parallel_engine.execute(
+    #         sql_query='SELECT * FROM s3object s',
+    #         extra_func=None,
+    #         extra_func_args={'test': 1},
+    #         s3_client=self.client,
+    #         input_serialization={},
+    #         output_serialization={}
+    #     )

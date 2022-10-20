@@ -1,7 +1,8 @@
-import tqdm
-import boto3
 from typing import Optional
 from multiprocessing import Pool
+import tqdm
+import boto3
+
 from select_plus.src.engine.base_engine import BaseEngine
 from select_plus.src.aws.s3 import S3
 

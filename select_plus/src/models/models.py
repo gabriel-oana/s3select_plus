@@ -20,10 +20,10 @@ class EngineResults:
     def payload_dict(self) -> list:
         payload_dict = []
         dict_repr = []
-        for i in self.payload:
-            s = i.replace('\n', ',')
-            f = list(eval(s))
-            dict_repr.append(f)
+        for item in self.payload:
+            sub_item = item.replace('\n', ',')
+            record = list(eval(sub_item))
+            dict_repr.append(record)
 
         for block in dict_repr:
             payload_dict += block
@@ -34,10 +34,10 @@ class EngineResults:
     def payload_csv(self):
         # CSV Parser
         payload_csv = []
-        for i in self.payload:
-            s = i.split('\n')
+        for item in self.payload:
+            sub_item = item.split('\n')
 
-            for row in s:
+            for row in sub_item:
                 if len(row) > 0:
                     payload_csv.append(row.split(','))
 

@@ -1,7 +1,7 @@
-import boto3
-from typing import Optional, Union
-
 from abc import ABC, abstractmethod
+from typing import Optional, Union
+import boto3
+
 from select_plus.src.aws.s3 import S3
 from select_plus.src.models.models import InputSerialization, OutputSerialization
 
